@@ -1,6 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-function Digits(props) {
+const Digits = ({onDisplayChange}) => {
+    const [displayDigit, setDisplayDigit] = useState('');
+
+
+    const handleClick = (value) => {
+      let newDisplay = displayDigit;
+
+      const isOperator = (val) => /[+\-*\/]/.test(val);
+
+    }
+
     return (
         <div className="buttons">
             <button className="digit-0" onClick={() => handleClick('0')}>0</button>

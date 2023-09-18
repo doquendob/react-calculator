@@ -2,12 +2,19 @@ import React, {useState} from 'react';
 import Digits from './Digits';
 
 function Calculator(props) {
-    const [display, setDisplay] = useState('');
+    const [displayValue, setDisplayValue] = useState('');
 
-    const handleClick = (value) => {
-        setDisplay(value);
-        console.log(value);
-    };
+    const clearInitialInput = () => {
+        setDisplayValue('');
+    }
+
+    const handleDisplayChange = (value) => {
+        if(value === '+' || value === '*' || value === '/') {
+            clearInitialInput();
+        } else {
+            setDisplayValue(value);
+        }
+    }
 
     return (
         <div className='calculator'>
@@ -16,7 +23,7 @@ function Calculator(props) {
              <p>{displayValue}</p>
            </div>
            <div id='digits-panel'>
-             <Digits/>
+             <Digits onChange={handleDisplayChange}/>
            </div>
         </div>
     );
