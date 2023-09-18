@@ -2,13 +2,40 @@ import React, {useState} from 'react';
 
 const Digits = ({onDisplayChange}) => {
     const [displayDigit, setDisplayDigit] = useState('');
-
+    const [result, setResult] = useState('');
 
     const handleClick = (value) => {
       let newDisplay = displayDigit;
 
       const isOperator = (val) => /[+\-*\/]/.test(val);
+      const endsWithOperator = () => isOperator(newDisplay.charAt(newDisplay.length - 1)); 
 
+      const clearDisplay = () => {
+        newDisplay = '';
+        setDisplayDigit('');
+        onDisplayChange('');
+      }
+
+      const handleOperator = () => {
+        if(result !== '') {
+          newDisplay = result + value;
+          setResult('');
+        } else if (endsWithOperator()) {
+          if(value === '-' && newDisplay.slice(-1) !== '-'){                               
+             newDisplay += value;
+            if(endsWithOperator() && newDisplay.slice(-2) === '+-') {
+               newDisplay = newDisplay.slice(0, -2) + value;
+            }
+          } else if(value !== '-') {
+            if(endsWithOperator() && newDisplay.slice(-2) === '/+' ){
+            } else {
+               newDisplay = newDisplay.slice(0, -1) + value;
+            }
+          }
+        } else {
+          newDisplay += value;
+        }
+      }
     }
 
     return (
