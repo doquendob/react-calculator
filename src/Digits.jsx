@@ -36,7 +36,7 @@ const Digits = ({onDisplayChange}) => {
           newDisplay += value;
         }
       }
-      
+
       const handleEquals = () => {
         try {
           let evalResult = eval(newDisplay).toLocaleString();
@@ -55,6 +55,53 @@ const Digits = ({onDisplayChange}) => {
           setResult('');
         }
       }
+
+      const handleNumber = () => {
+        if (value === '-' && (newDisplay === '' || endsWithOperator() || newDisplay.slice(-1) === '-' || /\d-\d$/.test(newDisplay))) {
+          newDisplay += value;
+        } else if (value !== '-') {
+          if (result !== '') {
+            newDisplay = value;
+            setResult('');
+          } else {
+            if (newDisplay === '0' && value !== '0') {
+              newDisplay = value;
+            } else if (/^-?0$/.test(newDisplay)){
+              newDisplay = newDisplay.replace('0', value);
+             } else {
+               if(newDisplay === '-0' && value === '0') {
+                newDisplay = value;
+              } else if (/\*$/.test(newDisplay) && value === '0') {
+                newDisplay += value;
+              } else {
+                 if(newDisplay.slice(-1) === '0') {
+                   if(newDisplay.slice(-2) === '-0') {
+                      newDisplay = newDisplay.slice(0, -1);
+                   }
+                 }
+                if(newDisplay.slice(-2) === '*0') {
+                  newDisplay = newDisplay.slice(0, -1) + value;
+                } else {
+                   newDisplay += value;
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      if (value === 'c') {
+        clearDisplay();
+      } else if (isOperator(value)) {
+        handleOperator();
+      } else if (value === '=') {
+        handleEquals();
+      } else {
+        handleNumber();
+      }
+    
+      setDisplayDigit(newDisplay);
+      onDisplayChange(newDisplay);
     }
 
     return (
