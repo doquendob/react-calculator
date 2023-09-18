@@ -36,6 +36,25 @@ const Digits = ({onDisplayChange}) => {
           newDisplay += value;
         }
       }
+      
+      const handleEquals = () => {
+        try {
+          let evalResult = eval(newDisplay).toLocaleString();
+          if (isNaN(evalResult)) {
+            clearDisplay();
+          } else {
+            if (evalResult.length > 4 && evalResult.includes('.')) {
+               newDisplay = evalResult.replace('.', '');
+            } else {
+               newDisplay = Math.floor(evalResult).toString();
+            } 
+            setResult(newDisplay);
+            onDisplayChange(newDisplay);
+          }
+        } catch (err) {
+          setResult('');
+        }
+      }
     }
 
     return (
