@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import './Calculator.css';
 
 const Digits = ({onDisplayChange}) => {
     const [displayDigit, setDisplayDigit] = useState('');
@@ -89,7 +90,7 @@ const Digits = ({onDisplayChange}) => {
           }
         }
       }
-      
+
       if (value === 'c') {
         clearDisplay();
       } else if (isOperator(value)) {

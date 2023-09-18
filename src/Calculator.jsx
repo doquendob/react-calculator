@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Digits from './Digits';
+import './Calculator.css';
 
 function Calculator(props) {
     const [displayValue, setDisplayValue] = useState('');
@@ -23,7 +24,7 @@ function Calculator(props) {
              <p>{displayValue}</p>
            </div>
            <div id='digits-panel'>
-             <Digits onChange={handleDisplayChange}/>
+             <Digits onDisplayChange={handleDisplayChange}/>
            </div>
         </div>
     );
